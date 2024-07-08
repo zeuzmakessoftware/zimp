@@ -28,6 +28,11 @@ function parseZimp(fileContent, basePath) {
         });
     }
 
+    function isReservedKeyword(word) {
+        const reservedKeywords = ['class', 'onClick', 'id'];
+        return reservedKeywords.includes(word);
+    }
+
     //checkLinePattern(/^\S+\s+:/, fileContent, 'Incorrect variable declaration spacing');
     //checkLinePattern(/fun\s+\w+\s+\(/, fileContent, 'Incorrect function declaration spacing');
 
@@ -46,11 +51,13 @@ function parseZimp(fileContent, basePath) {
     }
 
     while ((match = varPattern.exec(fileContent)) !== null) {
-        variables.push({ type: match[3] || 'unknown', name: match[1], value: match[4] });
+        if (!isReservedKeyword(match[1])) {
+            variables.push({ type: match[3] || 'unknown', name: match[1], value: match[4] });
+        }
     }
 
     while ((match = untypedVarPattern.exec(fileContent)) !== null) {
-        if (!variables.some(v => v.name === match[1])) {
+        if (!variables.some(v => v.name === match[1]) && !isReservedKeyword(match[1])) {
             variables.push({ type: 'unknown', name: match[1], value: match[2] });
         }
     }
@@ -69,7 +76,9 @@ function parseZimp(fileContent, basePath) {
         const propsPattern = /(\w+)=["']([^"']+)["']/g;
         let propMatch;
         while ((propMatch = propsPattern.exec(match[2])) !== null) {
-            props[propMatch[1]] = propMatch[2];
+            if (!isReservedKeyword(propMatch[1])) {
+                props[propMatch[1]] = propMatch[2];
+            }
         }
         components.push({ name: componentName, props });
     }
