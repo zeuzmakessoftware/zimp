@@ -1,6 +1,6 @@
 {
     "name": "zimp-framework",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "main": "index.js",
     "description": "Zimp, the JavaScript frontend framework with simple space based syntax.",
     "author": "",
