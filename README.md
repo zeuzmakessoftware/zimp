@@ -11,3 +11,11 @@ To get started with a Zimp web application, run this command:
 npx create-zimp-app
 ```
 From there follow the instructions to run the demo project. 
+
+# Notable Updates
+0.0.3
+- Completely refactored the parser to more efficiently check for errors.
+- Created a more descriptive page for error handling.
+- Added basic conditionals if and else (no else if yet).
+- Made it so non prop components worked properly.
+- Made the cat syntax less broken (yay).
